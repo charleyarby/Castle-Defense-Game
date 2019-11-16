@@ -2,7 +2,7 @@ import React from 'react';
 import '../styles/zombie.css'
 
 const Zombies = (props) => {
-  console.log(props.zombieLocations, 'this is zombie locations')
+  //console.log(props.zombieLocations, 'this is zombie locations')
   var zombies = props.zombieLocations
   return (
 

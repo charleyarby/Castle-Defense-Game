@@ -2,16 +2,16 @@ import React from 'react';
 import '../styles/plant.css'
 
 const Plant = (props) => {
-  console.log('in plants')
+  //console.log('in plants')
   return (
 
 
     <svg height="600" width='53'>
-    <circle value='p1' onClick={props.addBullet} className='plant' cx='30' cy='50' r="20"  />
-    <circle  className='plant' cx='30' cy='150' r="20"  />
-    <circle className='plant' cx='30' cy='250' r="20"  />
-    <circle className='plant' cx='30' cy='350' r="20"  />
-    <circle className='plant' cx='30' cy='450' r="20"  />
+    <circle value='50' onClick={()=>props.addBullet(null,50)} className='plant' cx='30' cy='50' r="20"  />
+    <circle value='150' onClick={()=>props.addBullet(null, 150)} className='plant' cx='30' cy='150' r="20"  />
+    <circle value='250' onClick={()=>props.addBullet(null,250)} className='plant' cx='30' cy='250' r="20"  />
+    <circle value='350' onClick={()=>props.addBullet(null,350)} className='plant' cx='30' cy='350' r="20"  />
+    <circle value='450' onClick={()=>props.addBullet(null,450)} className='plant' cx='30' cy='450' r="20"  />
     </svg>
 
 )}

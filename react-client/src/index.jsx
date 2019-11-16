@@ -5,7 +5,7 @@ import Plant from './components/plant.jsx';
 import Canvas from './components/canvas.jsx';
 import Lawn from './components/lawn.jsx';
 import Grid from './components/grid.jsx'
-import collision from './functions/collision.js'
+//import collision from './functions/collision.js'
 
 class App extends React.Component {
   constructor(props) {
@@ -20,16 +20,44 @@ class App extends React.Component {
     this.addBullet = this.addBullet.bind(this)
     this.moveBullet = this.moveBullet.bind(this)
     this.addZombie = this.addZombie.bind(this)
+    this.collision = this.collision.bind(this)
 
   }
 
   componentDidMount() {
     this.interval = setInterval(()=> {
-      console.log('hi')
+      //console.log('hi')
       this.moveBullet();
       this.moveZombie();
-      collision()
-    }, 100)
+     // console.log(this.state.bulletLocationsm, 'this is bullet loc')
+      var bulletLocations = this.state.bulletLocations;
+      var zombieLocations = this.state.zombieLocations;
+      this.collision(this.state.bulletLocations, this.state.zombieLocations)
+    }, 40)
+  }
+  collision(bulletLocations, zombieLocations) {
+    console.log('ni colli')
+    var bullets = bulletLocations;
+    var zombies = zombieLocations;
+    for(var i=0; i<bulletLocations.length; i++) {
+
+      for(var j=0; j<bullets.length; j++) {
+        // var bulletString = JSON.stringify(bullets[i])
+        // var zombieString = JSON.stringify(zombies[i])
+        var bulletX = bullets[i][0]
+        var zombieX = zombies[i][0]
+
+        if(bulletX>zombieX-3 && bulletX<zombieX+3) {
+          console.log('collided')
+          bullets.splice(i,1)
+          zombies.splice(j,1)
+        }
+      }
+    }
+    this.setState({
+      bulletLocations: bullets,
+      zombieLocations: zombies
+    })
   }
   moveBullet() {
     var allBullet = this.state.bulletLocations;
@@ -43,13 +71,9 @@ class App extends React.Component {
     })
   }
 
-  addBullet(event) {
-    var target = event.target;
-    var value = target.value;
-    console.log(target, 'this is target')
-    console.log(name, 'this is name')
-    console.log('fire')
-    var loc = [80,50]
+  addBullet(event, value) {
+    console.log(value)
+    var loc = [80,value]
     var allBullet = this.state.bulletLocations;
     allBullet.push(loc);
 

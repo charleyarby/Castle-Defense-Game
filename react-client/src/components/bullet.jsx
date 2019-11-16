@@ -2,7 +2,7 @@ import React from 'react';
 import '../styles/bullet.css'
 
 const Bullets = (props) => {
-  console.log(props.bulletLocations)
+  //console.log(props.bulletLocations)
   var bullets = props.bulletLocations
   return (
 

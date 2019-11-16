@@ -4,7 +4,7 @@ import Zombies from './zombies.jsx'
 import '../styles/lawn.css'
 
 const Lawn = (props) => {
-  console.log(props.zombieLocations[0] )
+  //console.log(props.zombieLocations[0] )
 
   return (
     <svg x='0' height="600" width="1920">
