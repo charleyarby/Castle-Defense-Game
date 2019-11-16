@@ -1,22 +1,19 @@
 import React from 'react';
 
 
-const List = (props) => {
-  console.log(props.location[0])
+const Zombie = (props) => {
+  console.log(props.zombieLocations[0] )
+  console.log(props.bulletLocations[0])
   return (
-
-  <div>
-    <div>
-    <svg height="1080" width="1920">
-    <circle cx={Number(props.location[0])} cy={Number(props.location[1])} r="20" style={circleStyle} />
+    <svg x='0' height="600" width="1920">
+    <circle cx={Number(props.zombieLocations[0])} cy={Number(props.zombieLocations[1])} r="20" style={circleStyle} />
+    <circle cx={Number(props.bulletLocations[0])} cy={Number(props.bulletLocations[1])} r="20" style={circleStyle} />
     </svg>
-    </div>
-  </div>
 )}
 
 const circleStyle = {
-  fill: 'blue',
+  fill: 'red',
   stroke: 'black',
 }
 
-export default List;
+export default Zombie;

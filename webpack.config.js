@@ -9,15 +9,27 @@ module.exports = {
     path: DIST_DIR
   },
   module : {
+
     loaders : [
       {
         test : /\.jsx?/,
         include : SRC_DIR,
-        loader : 'babel-loader',      
+        loader : 'babel-loader',
         query: {
           presets: ['react', 'es2015']
-       }
-      }
-    ]
-  }
+        }
+      },
+      {
+        test:/\.css$/,
+        use:['style-loader','css-loader']
+      },
+      {
+          test: /\.(png|svg|jpg|gif)$/,
+          use: [
+            'file-loader',
+          ],
+      },
+    ],
+
+  },
 };

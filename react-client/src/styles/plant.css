@@ -1,0 +1,10 @@
+circle {
+
+  stroke: #f00;
+  fill:green;
+}
+
+circle:hover {
+  stroke: #090;
+  fill:yellowgreen;
+}
