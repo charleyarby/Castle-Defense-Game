@@ -5,19 +5,21 @@ import Plant from './components/plant.jsx';
 import Canvas from './components/canvas.jsx';
 import Lawn from './components/lawn.jsx';
 import Grid from './components/grid.jsx'
+import collision from './functions/collision.js'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       items: [],
-      zombieLocations: [200,50],
+      zombieLocations: [],
       bulletLocations: []
     }
-    this.zombieMove = this.zombieMove.bind(this)
-    this.zombieStop = this.zombieStop.bind(this)
+    this.moveZombie = this.moveZombie.bind(this)
+    this.stopZombie = this.stopZombie.bind(this)
     this.addBullet = this.addBullet.bind(this)
     this.moveBullet = this.moveBullet.bind(this)
+    this.addZombie = this.addZombie.bind(this)
 
   }
 
@@ -25,7 +27,9 @@ class App extends React.Component {
     this.interval = setInterval(()=> {
       console.log('hi')
       this.moveBullet();
-    }, 1000)
+      this.moveZombie();
+      collision()
+    }, 100)
   }
   moveBullet() {
     var allBullet = this.state.bulletLocations;
@@ -39,9 +43,13 @@ class App extends React.Component {
     })
   }
 
-  addBullet() {
+  addBullet(event) {
+    var target = event.target;
+    var value = target.value;
+    console.log(target, 'this is target')
+    console.log(name, 'this is name')
     console.log('fire')
-    var loc = [60,50]
+    var loc = [80,50]
     var allBullet = this.state.bulletLocations;
     allBullet.push(loc);
 
@@ -50,19 +58,31 @@ class App extends React.Component {
     })
 
   }
-  zombieMove() {
+  moveZombie() {
 
-        this.interval = setInterval(() => {
-        var x = this.state.zombieLocations[0] -1
-        var y = this.state.zombieLocations[1]
-        this.setState({
-          zombieLocations: [x,y]
-        })
-      }, 30);
+    var allZombie = this.state.zombieLocations;
+    for(var i=0; i<allZombie.length; i++) {
+      var x = allZombie[i][0] - 2
+      var y = allZombie[i][1]
+      allZombie[i] = [x,y]
+    }
+    this.setState({
+      zombieLocations: allZombie
+    })
+  }
+
+  addZombie() {
+    var loc = [1000,50]
+    var allZombie = this.state.zombieLocations;
+    allZombie.push(loc);
+
+   this.setState({
+      zombieLocations: allZombie
+    })
 
   }
 
-  zombieStop() {
+  stopZombie() {
     clearInterval(this.interval);
   }
 
@@ -79,8 +99,9 @@ class App extends React.Component {
       <Plant addBullet={this.addBullet}/>
       <Lawn  zombieLocations={this.state.zombieLocations} bulletLocations={this.state.bulletLocations}/>
     </svg>
-      <button onClick={this.zombieMove}> zombieMove</button>
-      <button onClick={this.zombieStop}> zombieStop</button>
+      <button onClick={this.moveZombie}> moveZombie</button>
+      <button onClick={this.stopZombie}> stopZombie</button>
+      <button onClick={this.addZombie}> Add Zombie</button>
     </div>
     )
   }
