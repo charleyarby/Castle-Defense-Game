@@ -1,10 +1,10 @@
-circle {
+.plant {
 
   stroke: #f00;
   fill:green;
 }
 
-circle:hover {
+.plant:hover {
   stroke: #090;
   fill:yellowgreen;
 }

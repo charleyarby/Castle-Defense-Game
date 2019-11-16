@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import Zombie from './components/zombie.jsx';
 import Plant from './components/plant.jsx';
 import Canvas from './components/canvas.jsx';
+import Lawn from './components/lawn.jsx';
+import Grid from './components/grid.jsx'
 
 class App extends React.Component {
   constructor(props) {
@@ -15,36 +16,38 @@ class App extends React.Component {
     }
     this.zombieMove = this.zombieMove.bind(this)
     this.zombieStop = this.zombieStop.bind(this)
-    this.fireWeapon = this.fireWeapon.bind(this)
-    this.pauseGame = this.pauseGame.bind(this)
+    this.addBullet = this.addBullet.bind(this)
+    this.moveBullet = this.moveBullet.bind(this)
+
   }
 
   componentDidMount() {
     this.interval = setInterval(()=> {
       console.log('hi')
-      this.fireWeapon();
+      this.moveBullet();
     }, 1000)
   }
-  pauseGame() {
-
+  moveBullet() {
+    var allBullet = this.state.bulletLocations;
+    for(var i=0; i<allBullet.length; i++) {
+      var x = allBullet[i][0] + 2
+      var y = allBullet[i][1]
+      allBullet[i] = [x,y]
+    }
+    this.setState({
+      bulletLocations: allBullet
+    })
   }
-  fireWeapon() {
+
+  addBullet() {
     console.log('fire')
-    var loc = [0,50]
+    var loc = [60,50]
     var allBullet = this.state.bulletLocations;
     allBullet.push(loc);
 
-
-      this.setState({
-        bulletLocations: allBullet
-      })
-
-
-
-    // this.setState({
-    //   bulletLocations: allBullet
-    // })
-    // var allBullet = this.state.bulletLocations;
+   this.setState({
+      bulletLocations: allBullet
+    })
 
   }
   zombieMove() {
@@ -72,13 +75,9 @@ class App extends React.Component {
       width='1000'
       height='500'
     >
-
-
-
-
-
-      <Plant fireWeapon={this.fireWeapon}/>
-      <Zombie  zombieLocations={this.state.zombieLocations} bulletLocations={this.state.bulletLocations}/>
+      <Grid/>
+      <Plant addBullet={this.addBullet}/>
+      <Lawn  zombieLocations={this.state.zombieLocations} bulletLocations={this.state.bulletLocations}/>
     </svg>
       <button onClick={this.zombieMove}> zombieMove</button>
       <button onClick={this.zombieStop}> zombieStop</button>
@@ -87,7 +86,6 @@ class App extends React.Component {
   }
 }
 
-//const board={position:absolute}
 const style = {
   border: '1px solid black'
 }
