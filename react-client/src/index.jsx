@@ -33,7 +33,7 @@ class App extends React.Component {
       var bulletLocations = this.state.bulletLocations;
       var zombieLocations = this.state.zombieLocations;
       this.collision(this.state.bulletLocations, this.state.zombieLocations)
-    }, 40)
+    }, 33)
   }
   collision(bulletLocations, zombieLocations) {
     console.log('ni colli')
@@ -47,7 +47,7 @@ class App extends React.Component {
         var bulletX = bullets[i][0]
         var zombieX = zombies[i][0]
 
-        if(bulletX>zombieX-3 && bulletX<zombieX+3) {
+        if(bulletX>zombieX-15 && bulletX<zombieX+15) {
           console.log('collided')
           bullets.splice(i,1)
           zombies.splice(j,1)
@@ -62,7 +62,7 @@ class App extends React.Component {
   moveBullet() {
     var allBullet = this.state.bulletLocations;
     for(var i=0; i<allBullet.length; i++) {
-      var x = allBullet[i][0] + 2
+      var x = allBullet[i][0] + 10
       var y = allBullet[i][1]
       allBullet[i] = [x,y]
     }
@@ -97,12 +97,19 @@ class App extends React.Component {
 
   addZombie() {
     var loc = [1000,50]
-    var allZombie = this.state.zombieLocations;
-    allZombie.push(loc);
+    var lanes=[50,150,250,350,450]
+    this.interval = setInterval(()=> {
+      var y = lanes[Math.floor(Math.random()*5)]
+      console.log(y)
+      var allZombie = this.state.zombieLocations;
+      allZombie.push([1000, y]);
 
-   this.setState({
-      zombieLocations: allZombie
-    })
+     this.setState({
+        zombieLocations: allZombie
+      })
+
+    }, 2000)
+
 
   }
 
