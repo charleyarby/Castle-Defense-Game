@@ -55,7 +55,15 @@ class App extends React.Component {
         this.moveZombie();
 
       }
-    }, 1000)
+      if(this.state.frame % 5 ===0 && this.state.start===true) {
+     //   console.log('should add bullet')
+        this.addBullet(null, 150, zombieLocations)
+      }
+
+      if(this.state.frame % 30 ===0 && this.state.start===true) {
+        this.addZombie()
+      }
+    }, 30)
   }
 
   collision(bulletLocations, bulleti, bulletX, bulletY, damage) {
@@ -70,14 +78,15 @@ class App extends React.Component {
           var zombieY = zombies[i][1]
 
           if(bulletX>zombieX-15 && bulletX<zombieX+15 && bulletY>zombieY-15 && bulletY<zombieY+15) {
-            console.log('collided')
+           // console.log('collided')
             zombies[i][2] = zombies[i][2]-damage;
             bullets.splice(bulleti,1)
-            console.log(zombies[i][2])
+            //console.log(zombies[i][2])
             if(zombies[i][2]<=0) {
             zombies.splice(i,1)
-            }
             var kills = this.state.killed + 1
+            }
+
             this.setState({
               killed:kills
             })
@@ -108,13 +117,64 @@ class App extends React.Component {
     })
   }
 
-  addBullet(event, value) {
+  addBullet(event, value, zLocation) {
+    console.log('in add bullet')
+    var lane1 = false;
+    var lane2 = false;
+    var lane3 = false;
+    var lane4 = false;
+    var lane5 = false;
+   // console.log(zLocation)
+    for(var i=0; i<zLocation.length; i++) {
+      if(zLocation[i][1] === 50) {
+        lane1 = true;
+       // console.log('zombie in lane 1')
+      }
+      if(zLocation[i][1] === 150) {
+        lane2=true;
+        //console.log('zombie in lane 2')
+      }
+      if(zLocation[i][1] === 250) {
+        lane3 = true;
+        //console.log('zombie in lane 3')
+      }
+      if(zLocation[i][1] === 350) {
+        lane4=true;
+        ///console.log('zombie in lane 4')
+      }
+      if(zLocation[i][1] === 450) {
+        lane5=true;
+        //console.log('zombie in lane 5')
+      }
 
-    var damage =10;
+    }
+    var newBullet = []
+    if(lane1 == true) {
+      newBullet.push([80,50,10])
+    }
+    if(lane2 == true) {
+      newBullet.push([80,150,10])
+    }
+    if(lane3 == true) {
+      newBullet.push([80,250,10])
+    }
+    if(lane4 == true) {
+      newBullet.push([80,350,10])
+    }
+    if(lane5 == true) {
+      newBullet.push([80,450,10])
+    }
+
+
+    //var damage =10;
     //console.log(value)
-    var loc = [80, value, 10]
+    //var loc = [80, value, 10]
     var allBullet = this.state.bulletLocations;
-    allBullet.push(loc);
+    for(var i=0; i<newBullet.length; i++) {
+      allBullet.push(newBullet[i])
+    }
+
+
    // console.log(loc)
     //console.log(allBullet)
    this.setState({
@@ -157,8 +217,8 @@ class App extends React.Component {
     })
     var loc = [1000,50]
     var lanes=[50,150,250,350,450]
-    if(this.state.start===false) {
-    this.interval = setInterval(()=> {
+
+
       var y = lanes[Math.floor(Math.random()*5)]
       //console.log(y)
       var health = 100;
@@ -171,8 +231,7 @@ class App extends React.Component {
         start:true
       })
 
-    }, 4000)
-   }
+
 
 
   }
