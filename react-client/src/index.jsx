@@ -15,7 +15,8 @@ class App extends React.Component {
       zombieLocations: [],
       bulletLocations: [],
       start:false,
-      time:0
+      time:0,
+      killed:0
     }
     this.moveZombie = this.moveZombie.bind(this)
     this.stopZombie = this.stopZombie.bind(this)
@@ -27,12 +28,19 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    var start = Date.now()
 
     this.interval = setInterval(()=> {
       //console.log('hi')
+      var now = Date.now()
+      var seconds=0
       var bulletLocations = this.state.bulletLocations;
       var zombieLocations = this.state.zombieLocations;
-
+      seconds=Math.floor((now-start)/1000)
+      console.log(seconds)
+      this.setState({
+        time:seconds
+      })
       this.moveBullet();
       if(this.state.start===true) {
         this.moveZombie();
@@ -56,6 +64,10 @@ class App extends React.Component {
             console.log('collided')
             bullets.splice(bulleti,1)
             zombies.splice(i,1)
+            var kills = this.state.killed + 1
+            this.setState({
+              killed:kills
+            })
           }
         }
 
@@ -68,7 +80,7 @@ class App extends React.Component {
   moveBullet() {
     var allBullet = this.state.bulletLocations;
     for(var i=0; i<allBullet.length; i++) {
-      var x = allBullet[i][0] + 3
+      var x = allBullet[i][0] + 10
       var y = allBullet[i][1]
       allBullet[i] = [x,y]
       if(allBullet[i][0]>950) {
@@ -94,10 +106,14 @@ class App extends React.Component {
 
   }
   moveZombie() {
-    console.log('in move zombie')
+    //console.log('in move zombie')
     var allZombie = this.state.zombieLocations;
+    var speed=1
+    if(this.state.time %10) {
+      speed+=1
+    }
     for(var i=0; i<allZombie.length; i++) {
-      var x = allZombie[i][0] - 1
+      var x = allZombie[i][0] - speed
       var y = allZombie[i][1]
       allZombie[i] = [x,y]
 
@@ -152,6 +168,8 @@ class App extends React.Component {
       <button onClick={this.moveZombie}> moveZombie</button>
       <button onClick={this.stopZombie}> stopZombie</button>
       <button onClick={this.addZombie}> Add Zombie</button>
+      <div>{this.state.time}</div>
+      <div>Kills: {this.state.killed}</div>
     </div>
     )
   }
@@ -164,32 +182,3 @@ ReactDOM.render(<App />, document.getElementById('app'));
 
 
 
-
-// collision(bulletLocations, zombieLocations) {
-//   //console.log('ni colli')
-//   var bullets = bulletLocations;
-//   var zombies = zombieLocations;
-//   if(this.state.start===true) {
-//     for(var i=0; i<bulletLocations.length; i++) {
-
-//       for(var j=0; j<bullets.length; j++) {
-//         // var bulletString = JSON.stringify(bullets[i])
-//         // var zombieString = JSON.stringify(zombies[i])
-//         var bulletX = bullets[i][0]
-//         var zombieX = zombies[i][0]
-//         var bulletY = bullets[i][1]
-//         var zombieY = zombies[i][1]
-
-//         if(bulletX>zombieX-15 && bulletX<zombieX+15 && bulletY>zombieY-15 && bulletY<zombieY+15) {
-//           console.log('collided')
-//           bullets.splice(i,1)
-//           zombies.splice(j,1)
-//         }
-//       }
-//     }
-//   }
-//   this.setState({
-//     bulletLocations: bullets,
-//     zombieLocations: zombies
-//   })
-// }
