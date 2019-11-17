@@ -17,7 +17,8 @@ class App extends React.Component {
       start:false,
       time:0,
       killed:0,
-      startTime:0
+      startTime:0,
+      frame:0
     }
     this.moveZombie = this.moveZombie.bind(this)
     this.stopZombie = this.stopZombie.bind(this)
@@ -33,17 +34,20 @@ class App extends React.Component {
 
     this.interval = setInterval(()=> {
       //console.log('hi')
+      var frame = this.state.frame;
+
       var bulletLocations = this.state.bulletLocations;
       var zombieLocations = this.state.zombieLocations;
       if(this.state.start===true) {
+        frame++;
         var now = Date.now()
         var seconds=0
         var start = this.state.startTime
-
         seconds=Math.floor((now-start)/1000)
         //console.log(seconds)
         this.setState({
-          time:seconds
+          time:seconds,
+          frame: frame
         })
       }
       this.moveBullet();
@@ -51,7 +55,7 @@ class App extends React.Component {
         this.moveZombie();
 
       }
-    }, 30)
+    }, 1000)
   }
 
   collision(bulletLocations, bulleti, bulletX, bulletY, damage) {
