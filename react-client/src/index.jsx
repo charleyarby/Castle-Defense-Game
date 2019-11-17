@@ -13,7 +13,9 @@ class App extends React.Component {
     this.state = {
       items: [],
       zombieLocations: [],
-      bulletLocations: []
+      bulletLocations: [],
+      start:false,
+      time:0
     }
     this.moveZombie = this.moveZombie.bind(this)
     this.stopZombie = this.stopZombie.bind(this)
@@ -25,34 +27,38 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+
     this.interval = setInterval(()=> {
       //console.log('hi')
-      this.moveBullet();
-      this.moveZombie();
-     // console.log(this.state.bulletLocationsm, 'this is bullet loc')
       var bulletLocations = this.state.bulletLocations;
       var zombieLocations = this.state.zombieLocations;
-      this.collision(this.state.bulletLocations, this.state.zombieLocations)
-    }, 33)
-  }
-  collision(bulletLocations, zombieLocations) {
-    console.log('ni colli')
-    var bullets = bulletLocations;
-    var zombies = zombieLocations;
-    for(var i=0; i<bulletLocations.length; i++) {
 
-      for(var j=0; j<bullets.length; j++) {
-        // var bulletString = JSON.stringify(bullets[i])
-        // var zombieString = JSON.stringify(zombies[i])
-        var bulletX = bullets[i][0]
-        var zombieX = zombies[i][0]
+      this.moveBullet();
+      if(this.state.start===true) {
+        this.moveZombie();
 
-        if(bulletX>zombieX-15 && bulletX<zombieX+15) {
-          console.log('collided')
-          bullets.splice(i,1)
-          zombies.splice(j,1)
-        }
       }
+    }, 30)
+  }
+
+  collision(bulletLocations, bulleti, bulletX, bulletY) {
+    //console.log('ni colli')
+    var bullets = bulletLocations;
+    var zombies = this.state.zombieLocations;
+    if(this.state.start===true) {
+
+        for(var i=0; i<zombies.length; i++) {
+
+          var zombieX = zombies[i][0]
+          var zombieY = zombies[i][1]
+
+          if(bulletX>zombieX-15 && bulletX<zombieX+15 && bulletY>zombieY-15 && bulletY<zombieY+15) {
+            console.log('collided')
+            bullets.splice(bulleti,1)
+            zombies.splice(i,1)
+          }
+        }
+
     }
     this.setState({
       bulletLocations: bullets,
@@ -62,9 +68,14 @@ class App extends React.Component {
   moveBullet() {
     var allBullet = this.state.bulletLocations;
     for(var i=0; i<allBullet.length; i++) {
-      var x = allBullet[i][0] + 10
+      var x = allBullet[i][0] + 3
       var y = allBullet[i][1]
       allBullet[i] = [x,y]
+      if(allBullet[i][0]>950) {
+        console.log('should be gone')
+        allBullet.splice(i,1)
+      }
+      this.collision(allBullet, i, x, y)
     }
     this.setState({
       bulletLocations: allBullet
@@ -72,7 +83,7 @@ class App extends React.Component {
   }
 
   addBullet(event, value) {
-    console.log(value)
+    //console.log(value)
     var loc = [80,value]
     var allBullet = this.state.bulletLocations;
     allBullet.push(loc);
@@ -83,12 +94,17 @@ class App extends React.Component {
 
   }
   moveZombie() {
-
+    console.log('in move zombie')
     var allZombie = this.state.zombieLocations;
     for(var i=0; i<allZombie.length; i++) {
-      var x = allZombie[i][0] - 2
+      var x = allZombie[i][0] - 1
       var y = allZombie[i][1]
       allZombie[i] = [x,y]
+
+      if(allZombie[i][0]<50) {
+        console.log('should be gone')
+        allZombie.splice(i,1)
+      }
     }
     this.setState({
       zombieLocations: allZombie
@@ -98,17 +114,20 @@ class App extends React.Component {
   addZombie() {
     var loc = [1000,50]
     var lanes=[50,150,250,350,450]
+    if(this.state.start===false) {
     this.interval = setInterval(()=> {
       var y = lanes[Math.floor(Math.random()*5)]
-      console.log(y)
+      //console.log(y)
       var allZombie = this.state.zombieLocations;
       allZombie.push([1000, y]);
 
      this.setState({
-        zombieLocations: allZombie
+        zombieLocations: allZombie,
+        start:true
       })
 
-    }, 2000)
+    }, 1000)
+   }
 
 
   }
@@ -142,3 +161,35 @@ const style = {
   border: '1px solid black'
 }
 ReactDOM.render(<App />, document.getElementById('app'));
+
+
+
+
+// collision(bulletLocations, zombieLocations) {
+//   //console.log('ni colli')
+//   var bullets = bulletLocations;
+//   var zombies = zombieLocations;
+//   if(this.state.start===true) {
+//     for(var i=0; i<bulletLocations.length; i++) {
+
+//       for(var j=0; j<bullets.length; j++) {
+//         // var bulletString = JSON.stringify(bullets[i])
+//         // var zombieString = JSON.stringify(zombies[i])
+//         var bulletX = bullets[i][0]
+//         var zombieX = zombies[i][0]
+//         var bulletY = bullets[i][1]
+//         var zombieY = zombies[i][1]
+
+//         if(bulletX>zombieX-15 && bulletX<zombieX+15 && bulletY>zombieY-15 && bulletY<zombieY+15) {
+//           console.log('collided')
+//           bullets.splice(i,1)
+//           zombies.splice(j,1)
+//         }
+//       }
+//     }
+//   }
+//   this.setState({
+//     bulletLocations: bullets,
+//     zombieLocations: zombies
+//   })
+// }
