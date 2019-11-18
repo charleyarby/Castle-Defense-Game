@@ -1,11 +1,11 @@
 import React from 'react';
 
 const Panel = (props) => {
-  console.log(props.showPanel)
+  //console.log(props.plantLocation)
   if(props.showPanel === true) {
     return (
       <div>panel
-        <div>Current Tower: </div>
+        <div>Current Plant: {props.plantLocation[0]}, {props.plantLocation[1]}</div>
       </div>
     )
   }
