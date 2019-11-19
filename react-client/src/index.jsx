@@ -60,29 +60,57 @@ class App extends React.Component {
       this.moveBullet();
       if(this.state.start===true) {
         this.moveZombie();
+        this.addBullet(null, 150, zombieLocations)
 
       }
-      //if(frame % 20 ===0 && this.state.start===true) {
-     //   console.log('should add bullet')
-        this.addBullet(null, 150, zombieLocations)
-     // }
+
+
+
 
       if(frame % 50 ===0 && this.state.start===true) {
         this.addZombie()
       }
-    }, 30)
+    }, 30000)
   }
 
   buyPlant(plants, damage) {
-    console.log('in buy')
+    console.log(plants)
+    var currentPlot = this.state.currentPlantSelected
     var currentPlant = this.state.currentPlantSelected
-    currentPlant[2] = true;
+    var currentMoney = this.state.money
+
     currentPlant[3] = plants;
     currentPlant[4] = damage
-    this.setState({
-      currentPlantSelected: currentPlant,
-      plantExist:true
-    })
+    var cost=0
+
+    if(plants==='Pea-Shooter') {
+      console.log('buy peashooter')
+      cost=200
+    }
+    if(plants==='Cabbage') {
+      console.log('buy cabbage')
+      cost=300
+    }
+
+
+    if(currentMoney >= cost) {
+      currentPlant[2] = true;
+      currentMoney -= cost
+      this.setState({
+        currentPlantSelected: currentPlant,
+        plantExist:true,
+        money: currentMoney
+      })
+    } else if(currentMoney<cost){
+      currentPlant[2] = false;
+      this.setState({
+        plantExist:false,
+        money:currentMoney,
+        currentPlantSelected: currentPlot
+      })
+    }
+    console.log(currentPlot)
+    console.log(currentPlant)
   }
 
   showPanel(plant) {
@@ -127,15 +155,15 @@ class App extends React.Component {
             if(zombies[i][2]<=0) {
             zombies.splice(i,1)
             var kills = this.state.killed + 1
+            var newIncome = 100
+            var currentMoney = this.state.money;
             this.setState({
-              killed:kills
+              killed:kills,
+              money:currentMoney+newIncome
             })
             }
-
-
           }
         }
-
     }
     this.setState({
       bulletLocations: bullets,
@@ -166,33 +194,23 @@ class App extends React.Component {
     var zombieInLane =[false, false, false, false, false]
     var allPlants = this.state.allPlants
     var frame = this.state.frame;
-    console.log(frame)
+    //console.log(frame)
 
     for(var i=0; i<zLocation.length; i++) {
       if(zLocation[i][1] === 50) {
-
         zombieInLane[0]= true;
-
       }
       if(zLocation[i][1] === 150) {
-
         zombieInLane[1]= true;
-
       }
       if(zLocation[i][1] === 250) {
-
         zombieInLane[2]= true;
-
       }
       if(zLocation[i][1] === 350) {
-
         zombieInLane[3]= true;
-
       }
       if(zLocation[i][1] === 450) {
-
         zombieInLane[4]= true;
-
       }
 
     }
@@ -201,24 +219,20 @@ class App extends React.Component {
       for(var i=0; i<allPlants[j].length; i++) {
         var damage=allPlants[j][i][4]
         var type=allPlants[j][i][3]
-        if(allPlants[j][i][2] === true) {
+        if(allPlants[j][i][2] === true &&zombieInLane[j] === true) {
           if(type=='Pea-Shooter' && frame % 10 ===0)
-          newBullet.push([80,allPlants[j][i][1],damage, type])
+          newBullet.push([allPlants[j][i][0]+50,allPlants[j][i][1],damage, type])
           }
           if(type == 'Cabbage' && frame % 20 ===0) {
-            newBullet.push([80,allPlants[j][i][1],damage, type])
+            newBullet.push([allPlants[j][i][0]+50,allPlants[j][i][1],damage, type])
           }
       }
     }
-
-
 
     var allBullet = this.state.bulletLocations;
     for(var i=0; i<newBullet.length; i++) {
       allBullet.push(newBullet[i])
     }
-
-
 
    this.setState({
       bulletLocations: allBullet

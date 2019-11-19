@@ -8,10 +8,9 @@ const Panel = (props) => {
         <p1>
           <div>Selected Location: {props.plantLocation[0]}, {props.plantLocation[1]}</div>
 
-          <button onClick={()=>props.buyPlant('Pea-Shooter', 10)}>Buy Pea Shooter</button>
-          <button onClick={()=>props.buyPlant('Cabbage', 20)}>Buy Cabbage</button>
+          <button onClick={()=>props.buyPlant('Pea-Shooter', 10)}>Buy Pea Shooter $200</button>
+          <button onClick={()=>props.buyPlant('Cabbage', 20)}>Buy Cabbage $300</button>
           <button onClick={()=>props.buyPlant('Laser', 5)}>Buy Laser</button>
-
         </p1>
       )
     }
