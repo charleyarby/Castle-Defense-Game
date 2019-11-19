@@ -1,5 +1,13 @@
-.zombie {
+.regularZombies {
 
   stroke: #f00;
   fill:green;
 }
+
+.hardenedZombies {
+
+  stroke: #f00;
+  fill:green;
+  stroke-width:10px;
+}
+
