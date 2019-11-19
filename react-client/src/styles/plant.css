@@ -1,10 +1,28 @@
-.plant {
-
-  stroke: #f00;
-  fill:green;
+.currentPlant{
+  stroke: rgb(30, 255, 0);
+  fill:rgb(241, 58, 34);
 }
 
-.plant:hover {
+.select:hover {
   stroke: #090;
   fill:yellowgreen;
+}
+
+.noplant {
+
+  stroke: rgb(30, 255, 0);
+  fill:rgb(255, 255, 255);
+}
+
+
+
+.peaShooter {
+  stroke: rgb(30, 255, 0);
+  fill:rgb(108, 233, 86);
+}
+
+
+.Cabbage {
+  stroke: rgb(30, 255, 0);
+  fill:rgb(58, 110, 48);
 }

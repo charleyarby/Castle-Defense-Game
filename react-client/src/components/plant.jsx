@@ -3,15 +3,44 @@ import '../styles/plant.css'
 
 const Plant = (props) => {
   //console.log('in plants')
+  //console.log(props.currentPlantSelected, 'plant selected')
+  //console.log(props.allPlants)
+  var currentPlant = props.curentPlantSelected;
+  //console.log(props.currentPlantSelected)
+
   return (
 
+    <svg height="600" width='180'>
 
-    <svg height="600" width='53'>
-    <circle value='50' onClick={()=>props.addBullet(null,50)} className='plant' cx='30' cy='50' r="20"  />
-    <circle value='150' onClick={()=>props.addBullet(null, 150)} className='plant' cx='30' cy='150' r="20"  />
-    <circle value='250' onClick={()=>props.addBullet(null,250)} className='plant' cx='30' cy='250' r="20"  />
-    <circle value='350' onClick={()=>props.addBullet(null,350)} className='plant' cx='30' cy='350' r="20"  />
-    <circle value='450' onClick={()=>props.addBullet(null,450)} className='plant' cx='30' cy='450' r="20"  />
+       {props.allPlants.map((row)=> {
+         //console.log(row)
+       // for(var i=0; i<plant.length; i++) {
+         return(
+         <svg>
+        {row.map((column)=> {
+            if(column[2]===false) {
+             // console.log('should have blank', column)
+              return(
+                <circle  onClick={()=>props.showPanel(column )} className='select noplant ' cx={column[0]} cy={column[1]} r="20"  />
+              )
+            } else if(column[2] === true && column[3]==='Pea-Shooter') {
+              return(
+              <circle  onClick={()=>props.showPanel(column )} className='select peaShooter' cx={column[0]} cy={column[1]} r="10"  />
+              )
+            } else if(column[2] === true && column[3]==='Cabbage') {
+              return(
+              <circle  onClick={()=>props.showPanel(column )} className='select Cabbage' cx={column[0]} cy={column[1]} r="20"  />
+              )
+            }
+
+          })}
+          </svg>
+
+         )
+         //}
+
+      })}
+
     </svg>
 
 )}
