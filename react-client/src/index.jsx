@@ -62,10 +62,10 @@ class App extends React.Component {
         this.moveZombie();
 
       }
-      if(frame % 20 ===0 && this.state.start===true) {
+      //if(frame % 20 ===0 && this.state.start===true) {
      //   console.log('should add bullet')
         this.addBullet(null, 150, zombieLocations)
-      }
+     // }
 
       if(frame % 50 ===0 && this.state.start===true) {
         this.addZombie()
@@ -164,98 +164,52 @@ class App extends React.Component {
   addBullet(event, value, zLocation) {
     //console.log('in add bullet')
     var zombieInLane =[false, false, false, false, false]
+    var allPlants = this.state.allPlants
+    var frame = this.state.frame;
+    console.log(frame)
 
-    var lane0Plants = this.state.allPlants[0];
-    var lane1Plants = this.state.allPlants[1];
-    var lane2Plants = this.state.allPlants[2];
-    var lane3Plants = this.state.allPlants[3];
-    var lane4Plants = this.state.allPlants[4];
-
-   // console.log(zLocation)
     for(var i=0; i<zLocation.length; i++) {
       if(zLocation[i][1] === 50) {
-        lane0 = true;
+
         zombieInLane[0]= true;
-       // console.log('zombie in lane 1')
+
       }
       if(zLocation[i][1] === 150) {
-        lane1=true;
+
         zombieInLane[1]= true;
-        //console.log('zombie in lane 2')
+
       }
       if(zLocation[i][1] === 250) {
-        lane2 = true;
+
         zombieInLane[2]= true;
-        //console.log('zombie in lane 3')
+
       }
       if(zLocation[i][1] === 350) {
-        lane3=true;
+
         zombieInLane[3]= true;
-        ///console.log('zombie in lane 4')
+
       }
       if(zLocation[i][1] === 450) {
-        lane4=true;
+
         zombieInLane[4]= true;
-        //console.log('zombie in lane 5')
+
       }
 
     }
     var newBullet = []
-    for(var j=0; j<zombieInLane.length; j++) {
-      for(var i=0; i<lane0Plants.length; i++) {
-        var damage=lane0Plants[i][4]
-        var type=lane0Plants[i][3]
-        if(lane0Plants[i][2] === true) {
-          newBullet.push([80,50,damage, type])
-        }
+    for(var j=0; j<5; j++) {
+      for(var i=0; i<allPlants[j].length; i++) {
+        var damage=allPlants[j][i][4]
+        var type=allPlants[j][i][3]
+        if(allPlants[j][i][2] === true) {
+          if(type=='Pea-Shooter' && frame % 10 ===0)
+          newBullet.push([80,allPlants[j][i][1],damage, type])
+          }
+          if(type == 'Cabbage' && frame % 20 ===0) {
+            newBullet.push([80,allPlants[j][i][1],damage, type])
+          }
       }
     }
-    // if(lane0 == true) {
-    //   for(var i=0; i<lane0Plants.length; i++) {
-    //     var damage=lane0Plants[i][4]
-    //     var type=lane0Plants[i][3]
-    //     if(lane0Plants[i][2] === true) {
-    //       newBullet.push([80,50,damage, type])
-    //     }
-    //   }
-
-    // }
-    // if(lane1 == true) {
-    //   for(var i=0; i<lane1Plants.length; i++) {
-    //     var damage=lane1Plants[i][4]
-    //     var type=lane1Plants[i][3]
-    //     if(lane1Plants[i][2] === true) {
-    //       newBullet.push([80,150,damage, type])
-    //     }
-    //   }
-    // }
-    // if(lane2 == true) {
-    //   for(var i=0; i<lane2Plants.length; i++) {
-    //     var damage=lane2Plants[i][4]
-    //     var type=lane2Plants[i][3]
-    //     if(lane2Plants[i][2] === true) {
-    //       newBullet.push([80,250,damage, type])
-    //     }
-    //   }
-    // }
-    // if(lane3 == true) {
-    //   for(var i=0; i<lane3Plants.length; i++) {
-    //     var damage=lane3Plants[i][4]
-    //     var type=lane3Plants[i][3]
-    //     if(lane3Plants[i][2] === true) {
-    //       newBullet.push([80,350,damage, type])
-    //     }
-    //   }
-    // }
-    // if(lane4 == true) {
-    //   for(var i=0; i<lane4Plants.length; i++) {
-    //     var damage=lane4Plants[i][4]
-    //     var type=lane4Plants[i][3]
-    //     if(lane4Plants[i][2] === true) {
-    //       newBullet.push([80,450,damage, type])
-    //     }
-    //   }
-    // }
 
 
 
