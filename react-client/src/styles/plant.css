@@ -1,3 +1,8 @@
+.currentPlant{
+  stroke: rgb(30, 255, 0);
+  fill:rgb(241, 58, 34);
+}
+
 .select:hover {
   stroke: #090;
   fill:yellowgreen;
@@ -16,3 +21,8 @@
   fill:rgb(108, 233, 86);
 }
 
+
+.Cabbage {
+  stroke: rgb(30, 255, 0);
+  fill:rgb(58, 110, 48);
+}

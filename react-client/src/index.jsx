@@ -22,6 +22,7 @@ class App extends React.Component {
       startTime:0,
       frame:0,
       showPanel: false,
+      plantExist:false,
       money:500
     }
     this.moveZombie = this.moveZombie.bind(this)
@@ -31,6 +32,7 @@ class App extends React.Component {
     this.addZombie = this.addZombie.bind(this)
     this.collision = this.collision.bind(this)
     this.showPanel = this.showPanel.bind(this)
+    this.buyPlant = this.buyPlant.bind(this)
 
   }
 
@@ -71,21 +73,36 @@ class App extends React.Component {
     }, 30)
   }
 
-  showPanel(x,y) {
-    var newPlant = JSON.stringify([x,y])
-    var lastPlant = JSON.stringify(this.state.currentPlantSelected)
-    //console.log(lastPlant, 'current plant')
+  buyPlant(plants, damage) {
+    console.log('in buy')
+    var currentPlant = this.state.currentPlantSelected
+    currentPlant[2] = true;
+    currentPlant[3] = plants;
+    currentPlant[4] = damage
+    this.setState({
+      currentPlantSelected: currentPlant,
+      plantExist:true
+    })
+  }
 
-    //console.log(newPlant, 'this is new plant')
+  showPanel(plant) {
+    var newPlant = JSON.stringify([plant[0],plant[1]])
+    var lastPlant = this.state.currentPlantSelected
+    lastPlant = JSON.stringify([lastPlant[0],lastPlant[1]])
+    console.log(lastPlant, 'current plant')
+
+    console.log(newPlant, 'this is new plant')
     if(this.state.showPanel===false || lastPlant !== newPlant) {
      // console.log('should show panel')
       this.setState({
         showPanel: true,
-        currentPlantSelected:[x,y]
+        currentPlantSelected:plant,
+        plantExist:plant[2]
       })
     }else if(this.state.showPanel===true) {
       this.setState({
-        showPanel: false
+        showPanel: false,
+        plantExist:plant[2]
       })
     }
 
@@ -131,7 +148,8 @@ class App extends React.Component {
       var x = allBullet[i][0] + 10
       var y = allBullet[i][1]
       var damage = allBullet[i][2]
-      allBullet[i] = [x,y, damage]
+      var type = allBullet[i][3]
+      allBullet[i] = [x,y, damage, type]
       if(allBullet[i][0]>1000) {
 
         allBullet.splice(i,1)
@@ -144,12 +162,9 @@ class App extends React.Component {
   }
 
   addBullet(event, value, zLocation) {
-    console.log('in add bullet')
-    var lane0 = false;
-    var lane1 = false;
-    var lane2 = false;
-    var lane3 = false;
-    var lane4 = false;
+    //console.log('in add bullet')
+    var zombieInLane =[false, false, false, false, false]
+
     var lane0Plants = this.state.allPlants[0];
     var lane1Plants = this.state.allPlants[1];
     var lane2Plants = this.state.allPlants[2];
@@ -160,63 +175,87 @@ class App extends React.Component {
     for(var i=0; i<zLocation.length; i++) {
       if(zLocation[i][1] === 50) {
         lane0 = true;
+        zombieInLane[0]= true;
        // console.log('zombie in lane 1')
       }
       if(zLocation[i][1] === 150) {
         lane1=true;
+        zombieInLane[1]= true;
         //console.log('zombie in lane 2')
       }
       if(zLocation[i][1] === 250) {
         lane2 = true;
+        zombieInLane[2]= true;
         //console.log('zombie in lane 3')
       }
       if(zLocation[i][1] === 350) {
         lane3=true;
+        zombieInLane[3]= true;
         ///console.log('zombie in lane 4')
       }
       if(zLocation[i][1] === 450) {
         lane4=true;
+        zombieInLane[4]= true;
         //console.log('zombie in lane 5')
       }
 
     }
     var newBullet = []
-    if(lane0 == true) {
+    for(var j=0; j<zombieInLane.length; j++) {
       for(var i=0; i<lane0Plants.length; i++) {
-        if(lane0Plants[i][2] !== false) {
-          newBullet.push([80,50,10])
+        var damage=lane0Plants[i][4]
+        var type=lane0Plants[i][3]
+        if(lane0Plants[i][2] === true) {
+          newBullet.push([80,50,damage, type])
         }
       }
+    }
+    // if(lane0 == true) {
+    //   for(var i=0; i<lane0Plants.length; i++) {
+    //     var damage=lane0Plants[i][4]
+    //     var type=lane0Plants[i][3]
+    //     if(lane0Plants[i][2] === true) {
+    //       newBullet.push([80,50,damage, type])
+    //     }
+    //   }
 
-    }
-    if(lane1 == true) {
-      for(var i=0; i<lane1Plants.length; i++) {
-        if(lane1Plants[i][2] !== false) {
-          newBullet.push([80,150,10])
-        }
-      }
-    }
-    if(lane2 == true) {
-      for(var i=0; i<lane2Plants.length; i++) {
-        if(lane2Plants[i][2] !== false) {
-          newBullet.push([80,250,10])
-        }
-      }
-    }
-    if(lane3 == true) {
-      for(var i=0; i<lane3Plants.length; i++) {
-        if(lane3Plants[i][2] !== false) {
-          newBullet.push([80,350,10])
-        }
-      }
-    }
-    if(lane4 == true) {
-      for(var i=0; i<lane4Plants.length; i++) {
-        if(lane4Plants[i][2] !== false) {
-          newBullet.push([80,450,10])
-        }
-      }
-    }
+    // }
+    // if(lane1 == true) {
+    //   for(var i=0; i<lane1Plants.length; i++) {
+    //     var damage=lane1Plants[i][4]
+    //     var type=lane1Plants[i][3]
+    //     if(lane1Plants[i][2] === true) {
+    //       newBullet.push([80,150,damage, type])
+    //     }
+    //   }
+    // }
+    // if(lane2 == true) {
+    //   for(var i=0; i<lane2Plants.length; i++) {
+    //     var damage=lane2Plants[i][4]
+    //     var type=lane2Plants[i][3]
+    //     if(lane2Plants[i][2] === true) {
+    //       newBullet.push([80,250,damage, type])
+    //     }
+    //   }
+    // }
+    // if(lane3 == true) {
+    //   for(var i=0; i<lane3Plants.length; i++) {
+    //     var damage=lane3Plants[i][4]
+    //     var type=lane3Plants[i][3]
+    //     if(lane3Plants[i][2] === true) {
+    //       newBullet.push([80,350,damage, type])
+    //     }
+    //   }
+    // }
+    // if(lane4 == true) {
+    //   for(var i=0; i<lane4Plants.length; i++) {
+    //     var damage=lane4Plants[i][4]
+    //     var type=lane4Plants[i][3]
+    //     if(lane4Plants[i][2] === true) {
+    //       newBullet.push([80,450,damage, type])
+    //     }
+    //   }
+    // }
 
 
 
@@ -294,15 +333,14 @@ class App extends React.Component {
       height='500'
     >
       <Grid/>
-      <Plant showPanel={this.showPanel} currentPlantSelected={this.state.currentPlantSelected} allPlants={this.state.allPlants}/>
+      <Plant showPanel={this.showPanel} currentPlantSelected={this.state.currentPlantSelected} allPlants={this.state.allPlants} highlight = {this.state.showPanel}/>
       <Lawn  zombieLocations={this.state.zombieLocations} bulletLocations={this.state.bulletLocations}/>
 
     </svg>
     <div>
-    <Panel showPanel={this.state.showPanel} plantLocation={this.state.currentPlantSelected}/>
-      <button onClick={this.moveZombie}> moveZombie</button>
-      <button onClick={this.stopZombie}> stopZombie</button>
-      <button onClick={this.addZombie}> Add Zombie</button>
+    <Panel showPanel={this.state.showPanel} plantLocation={this.state.currentPlantSelected} plantExist = {this.state.plantExist} buyPlant={this.buyPlant}/>
+      <button onClick={this.stopZombie}> Stop</button>
+      <button onClick={this.addZombie}> Start</button>
       </div>
       <div>Time: {this.state.time} seconds</div>
       <div>Kills: {this.state.killed}</div>

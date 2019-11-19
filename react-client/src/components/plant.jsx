@@ -6,20 +6,33 @@ const Plant = (props) => {
   //console.log(props.currentPlantSelected, 'plant selected')
   //console.log(props.allPlants)
   var currentPlant = props.curentPlantSelected;
+  //console.log(props.currentPlantSelected)
+
   return (
 
     <svg height="600" width='53'>
       {props.allPlants.map((plant)=> {
-        if(plant[0][2]===false) {
-          return(
-            <circle value='450' onClick={()=>props.showPanel(0,450 )} className='select noplant ' cx={plant[0][0]} cy={plant[0][1]} r="20"  />
-          )
-        } else if(plant[0][2] === 'peaShooter') {
-          return(
-          <circle value='450' onClick={()=>props.showPanel(0,450 )} className='select peaShooter' cx={plant[0][0]} cy={plant[0][1]} r="20"  />
-          )
-        }
+
+        for(var i=0; i<plant.length; i++) {
+          if(plant[i][2]===false) {
+            return(
+              <circle  onClick={()=>props.showPanel(plant[i] )} className='select noplant ' cx={plant[i][0]} cy={plant[i][1]} r="20"  />
+
+            )
+          } else if(plant[i][2] === true && plant[i][3]==='Pea-Shooter') {
+            return(
+            <circle  onClick={()=>props.showPanel(plant[i] )} className='select peaShooter' cx={plant[i][0]} cy={plant[i][1]} r="10"  />
+            )
+          } else if(plant[i][2] === true && plant[i][3]==='Cabbage') {
+            return(
+            <circle  onClick={()=>props.showPanel(plant[i] )} className='select Cabbage' cx={plant[i][0]} cy={plant[i][1]} r="20"  />
+            )
+          }
+
+         }
+
       })}
+
     </svg>
 
 )}
