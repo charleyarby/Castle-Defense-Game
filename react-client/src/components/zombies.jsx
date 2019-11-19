@@ -10,11 +10,11 @@ const Zombies = (props) => {
       {zombies.map((zombie)=> {
         if(zombie[3]==='regularZombies') {
         return(
-         <circle className='regularZombies' cx={Number(zombie[0])} cy={Number(zombie[1])} r="30"  />
+         <circle className='regularZombies' cx={Number(zombie[0])} cy={Number(zombie[1])} r="20"  />
          )
         } else if(zombie[3]==='hardenedZombies') {
           return(
-            <circle className='hardenedZombies' cx={Number(zombie[0])} cy={Number(zombie[1])} r="30"  />
+            <circle className='hardenedZombies' cx={Number(zombie[0])} cy={Number(zombie[1])} r="25"  />
             )
         }
     })}

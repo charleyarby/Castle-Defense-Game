@@ -18,7 +18,14 @@ const Plant = (props) => {
          return(
          <svg>
         {row.map((column)=> {
-            if(column[2]===false) {
+            var strCol=JSON.stringify(column)
+            var strCurr=JSON.stringify(props.currentPlantSelected)
+            if(strCol == strCurr) {
+              return(
+                <circle  onClick={()=>props.showPanel(column )} className='selected ' cx={column[0]} cy={column[1]} r="20"  />
+              )
+            }
+            else if(column[2]===false) {
              // console.log('should have blank', column)
               return(
                 <circle  onClick={()=>props.showPanel(column )} className='select noplant ' cx={column[0]} cy={column[1]} r="20"  />
@@ -34,6 +41,7 @@ const Plant = (props) => {
             }
 
           })}
+
           </svg>
 
          )

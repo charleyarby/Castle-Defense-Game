@@ -1,7 +1,7 @@
 var Rounds = [
   {round:1,
-   regularZombies:2,
-   hardenedZombies:3,
+   regularZombies:10,
+   hardenedZombies:5,
    badassZombies:0,
    superbadassZombies:0},
    {

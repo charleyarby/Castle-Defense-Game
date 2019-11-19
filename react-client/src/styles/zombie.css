@@ -1,7 +1,7 @@
-.regularZombies {
+.regularZombies{
 
   stroke: #f00;
-  fill:red;
+  fill:rgb(48, 112, 28);
 }
 
 .hardenedZombies {

@@ -8,8 +8,13 @@ import Grid from './components/grid.jsx';
 import Panel from './components/panel.jsx';
 import plantsLocation from './components/plantConfig.js';
 import Rounds from './components/roundsConfig.js';
+import UIFx from 'uifx';
+import SFXSplatter from './SFX/splatter.mp3'
+import './styles/index.css'
+const splatter = new UIFx( SFXSplatter);
 
 class App extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -27,17 +32,18 @@ class App extends React.Component {
       showPanel: false,
       plantExist:false,
       money:1500,
-      lost:'false',
-      win: ''
+      lost:'Not Yet',
+      win: 'TBD'
     }
     this.moveZombie = this.moveZombie.bind(this)
-    this.stopZombie = this.stopZombie.bind(this)
+    //this.stopZombie = this.stopZombie.bind(this)
     this.addBullet = this.addBullet.bind(this)
     this.moveBullet = this.moveBullet.bind(this)
     this.addZombie = this.addZombie.bind(this)
     this.collision = this.collision.bind(this)
     this.showPanel = this.showPanel.bind(this)
     this.buyPlant = this.buyPlant.bind(this)
+    this.stop = this.stop.bind(this)
 
   }
 
@@ -141,28 +147,40 @@ class App extends React.Component {
     }else if(this.state.showPanel===true) {
       this.setState({
         showPanel: false,
-        plantExist:plant[2]
+        plantExist:plant[2],
+        currentPlantSelected:[]
       })
     }
 
   }
 
-  collision(bulletLocations, bulleti, bulletX, bulletY, damage) {
+  collision() {
     //console.log('ni colli')
-    var bullets = bulletLocations;
-    var zombies = this.state.zombieLocations;
+    var bullets = this.state.bulletLocations.slice()
+    var zombies = this.state.zombieLocations.slice();
     if(this.state.start===true) {
 
         for(var i=0; i<zombies.length; i++) {
-
+          if(bullets.length!==0) {
+          for(var j=0; j<bullets.length; j++) {
           var zombieX = zombies[i][0]
           var zombieY = zombies[i][1]
+          var bX = bullets[j][0]
+          var bY = bullets[j][1]
 
-          if(bulletX>zombieX-15 && bulletX<zombieX+15 && bulletY>zombieY-15 && bulletY<zombieY+15) {
-           // console.log('collided')
-            zombies[i][2] = zombies[i][2]-damage;
-            bullets.splice(bulleti,1)
-            //console.log(zombies[i][2])
+          if(bX>zombieX-15 && bX<zombieX+15 && bY>zombieY-15 && bY<zombieY+15) {
+            console.log(zombies[i], 'zombie')
+            console.log(bullets[j], 'bullet')
+            zombies[i][2] = zombies[i][2]-bullets[j][2];
+            bullets.splice(j,1)
+
+            splatter.play();
+
+
+            this.setState({
+              bulletLocations: bullets
+            })
+
             if(zombies[i][2]<=0) {
               zombies.splice(i,1)
               var kills = this.state.killed + 1
@@ -170,16 +188,16 @@ class App extends React.Component {
               var currentMoney = this.state.money;
               this.setState({
                 killed:kills,
-                money:currentMoney+newIncome
+                money:currentMoney+newIncome,
+                zombieLocations: zombies
               })
             }
           }
         }
+      }
     }
-    this.setState({
-      bulletLocations: bullets,
-      zombieLocations: zombies
-    })
+    }
+
   }
   moveBullet() {
     var allBullet = this.state.bulletLocations;
@@ -190,14 +208,11 @@ class App extends React.Component {
       var type = allBullet[i][3]
       allBullet[i] = [x,y, damage, type]
       if(allBullet[i][0]>1000) {
-
         allBullet.splice(i,1)
       }
-      this.collision(allBullet, i, x, y, damage, type)
+
     }
-    this.setState({
-      bulletLocations: allBullet
-    })
+    this.collision()
   }
 
   addBullet(event, value, zLocation) {
@@ -238,11 +253,8 @@ class App extends React.Component {
           if(type=='Pea-Shooter' && frame % 10 ===0 ){
            newBullet.push([allPlants[j][i][0]+50,allPlants[j][i][1],damage, type])
           }
-          if(type == 'Cabbage' && frame % 20 ===0 ) {
-            //console.log('shoot')
-            //console.log(zombieInLane[j], 'condition shoot')
+          if(type == 'Cabbage' && frame % 40 ===0 ) {
             newBullet.push([allPlants[j][i][0]+50,allPlants[j][i][1],damage, type])
-          //  console.log(newBullet, 'this is new bullets')
           }
         }
       }
@@ -266,7 +278,7 @@ class App extends React.Component {
       speed+=1
     }
     for(var i=0; i<allZombie.length; i++) {
-      var x = allZombie[i][0] - speed
+      var x = allZombie[i][0] - speed/2
       var y = allZombie[i][1]
       var health = allZombie[i][2]
      var type = allZombie[i][3]
@@ -341,7 +353,7 @@ class App extends React.Component {
 
   }
 
-  stopZombie() {
+  stop() {
     clearInterval(this.interval);
   }
 
@@ -362,14 +374,20 @@ class App extends React.Component {
     <div>
     <Panel showPanel={this.state.showPanel} plantLocation={this.state.currentPlantSelected} plantExist = {this.state.plantExist} buyPlant={this.buyPlant}/>
       {/* <button onClick={this.stopZombie}> Stop</button> */}
-      <button onClick={this.addZombie}> Start</button>
-      </div>
 
-      <div>Round: {this.state.currentRound.round}</div>
-      <div>Kills: {this.state.killed}</div>
-      <div>Money: ${this.state.money}</div>
-      <div>Lost: {this.state.lost}</div>
-      <div>Win: {this.state.win}</div>
+      </div>
+      <div className='stats-container'>
+        <div className='stats'>Round: {this.state.currentRound.round}</div>
+        <div className='stats'>Kills: {this.state.killed}</div>
+        <div className='stats'>Money: ${this.state.money}</div>
+        <div className='stats'>Lost: {this.state.lost}</div>
+        <div className='stats'>Win: {this.state.win}</div>
+      </div>
+      <div className='menu-buttons'>
+      <button className='menu-button'onClick={this.stop}>Quit </button>
+      <button className='menu-button' onClick={this.addZombie}> Start</button>
+
+      </div>
     </div>
     )
   }

@@ -1,0 +1,20 @@
+.stats-container {
+  display:flex;
+  justify-content: space-between;
+  margin-right:10%;
+
+}
+
+.stats {
+  font-size:30px;
+}
+
+.menu-buttons {
+  margin-left:75%;
+  margin-top:5%;
+
+}
+.menu-button {
+  font-size:30px;
+
+}

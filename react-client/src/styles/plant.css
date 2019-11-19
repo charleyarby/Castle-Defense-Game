@@ -8,6 +8,10 @@
   fill:yellowgreen;
 }
 
+.selected{
+  stroke: rgb(30, 255, 0);
+  fill:rgb(241, 58, 34);
+}
 .noplant {
 
   stroke: rgb(30, 255, 0);
