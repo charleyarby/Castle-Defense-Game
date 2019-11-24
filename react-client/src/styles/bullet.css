@@ -12,3 +12,8 @@
   stroke: rgb(30, 255, 0);
   fill:rgb(59, 164, 190, 0.7);
 }
+
+.missile {
+  stroke: rgb(30, 255, 0);
+  fill:rgba(0, 0, 0, 0.7);
+}

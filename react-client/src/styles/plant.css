@@ -35,3 +35,8 @@
   stroke: rgb(30, 255, 0);
   fill:rgb(93, 195, 73);
 }
+
+.Missile {
+  stroke: rgb(30, 255, 0);
+  fill:rgb(0, 0, 0);
+}

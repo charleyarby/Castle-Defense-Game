@@ -19,7 +19,7 @@ const Impact = (props) => {
             )
           } else if(impact[3]==='Cabbage') {
             return(
-              <rect className='cabbage-impact' x={Number(impact[0])-100} y={Number(impact[1])-150} width='200' height='300'>
+              <rect className='cabbage-impact' x={Number(impact[0])-100} y={Number(impact[1])-150} rx="20" rx="40" width='200' height='300'>
                 <animate attributeName="r" from="0" to="30" dur="0.5s"/>
               </rect>
             )

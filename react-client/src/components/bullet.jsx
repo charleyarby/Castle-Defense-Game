@@ -19,9 +19,13 @@ const Bullets = (props) => {
             )
         }else if(bullet[3]==='Laser') {
           return(
-            <rect className='laser' x={Number(bullet[0])} y={Number(bullet[1])-10}  height='20' width='1000'>
-              <animate attributeName="width" from='100' to="1000" dur="0.3s"/>
+            <rect className='laser' x={Number(bullet[0])} y={Number(bullet[1])-10} rx="20" ry="40" height='20' width='920'>
+              <animate attributeName="width" from='100' to="1000" dur="1s"/>
             </rect>
+            )
+        }else if(bullet[3]==='Missile') {
+          return(
+            <circle className='missile' cx={Number(bullet[0])} cy={Number(bullet[1])} r="20"  />
             )
         }
        })}
