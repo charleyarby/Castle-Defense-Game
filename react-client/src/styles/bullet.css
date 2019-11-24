@@ -5,5 +5,10 @@
 
 .cabbage {
   stroke: rgb(30, 255, 0);
-  fill:rgb(58, 110, 48);
+  fill:rgb(93, 195, 73);
+}
+
+.laser {
+  stroke: rgb(30, 255, 0);
+  fill:rgb(59, 164, 190, 0.7);
 }

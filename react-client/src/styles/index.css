@@ -1,7 +1,7 @@
 .stats-container {
   display:flex;
   justify-content: space-between;
-  margin-right:10%;
+  margin-right: 50%;
 
 }
 
@@ -10,8 +10,8 @@
 }
 
 .menu-buttons {
-  margin-left:75%;
-  margin-top:5%;
+  margin-left:40%;
+  margin-top:3%;
 
 }
 .menu-button {

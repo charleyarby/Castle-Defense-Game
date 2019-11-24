@@ -10,7 +10,7 @@ const Plant = (props) => {
 
   return (
 
-    <svg height="600" width='180'>
+    <svg height="600" width='240'>
 
        {props.allPlants.map((row)=> {
          //console.log(row)
@@ -21,9 +21,19 @@ const Plant = (props) => {
             var strCol=JSON.stringify(column)
             var strCurr=JSON.stringify(props.currentPlantSelected)
             if(strCol == strCurr) {
-              return(
-                <circle  onClick={()=>props.showPanel(column )} className='selected ' cx={column[0]} cy={column[1]} r="20"  />
-              )
+              if(props.currentPlantSelected[3] === 'Pea-Shooter') {
+                return(
+                  <circle  onClick={()=>props.showPanel(column )} className='selected ' cx={column[0]} cy={column[1]} r="10"  />
+                )
+              } else if(props.currentPlantSelected[3] === 'Cabbage') {
+                  return(
+                    <circle  onClick={()=>props.showPanel(column )} className='selected ' cx={column[0]} cy={column[1]} r="20"  />
+                  )
+              } else if(props.currentPlantSelected[3] === '') {
+                return(
+                  <circle  onClick={()=>props.showPanel(column )} className='selected ' cx={column[0]} cy={column[1]} r="20"  />
+                )
+            }
             }
             else if(column[2]===false) {
              // console.log('should have blank', column)
@@ -38,7 +48,12 @@ const Plant = (props) => {
               return(
               <circle  onClick={()=>props.showPanel(column )} className='select Cabbage' cx={column[0]} cy={column[1]} r="20"  />
               )
+            } else if(column[2] === true && column[3]==='Laser') {
+              return(
+              <circle  onClick={()=>props.showPanel(column )} className='select Laser' cx={column[0]} cy={column[1]} r="20"  />
+              )
             }
+
 
           })}
 

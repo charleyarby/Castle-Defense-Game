@@ -14,6 +14,7 @@ const Grid = (props) => {
     <line x1="60" x2="60" y1="0" y2="500" stroke="black" strokeWidth="1"/>
     <line x1="120" x2="120" y1="0" y2="500" stroke="black" strokeWidth="1"/>
     <line x1="180" x2="180" y1="0" y2="500" stroke="black" strokeWidth="1"/>
+    <line x1="240" x2="240" y1="0" y2="500" stroke="black" strokeWidth="1"/>
     </svg>
 
 )}

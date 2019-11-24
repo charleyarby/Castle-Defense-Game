@@ -17,6 +17,12 @@ const Bullets = (props) => {
           return(
             <circle className='cabbage' cx={Number(bullet[0])} cy={Number(bullet[1])} r="20"  />
             )
+        }else if(bullet[3]==='Laser') {
+          return(
+            <rect className='laser' x={Number(bullet[0])} y={Number(bullet[1])-10}  height='20' width='1000'>
+              <animate attributeName="width" from='100' to="1000" dur="0.3s"/>
+            </rect>
+            )
         }
        })}
     </svg>
