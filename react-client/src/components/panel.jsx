@@ -9,7 +9,7 @@ const Panel = (props) => {
 
           <div className='panel-buttons'>
           <button className='panel-button' onClick={()=>props.buyPlant('Pea-Shooter', 10)}>Buy Pea Shooter $200</button>
-          <button className='panel-button' onClick={()=>props.buyPlant('Cabbage', 20)}>Buy Cabbage $300</button>
+          <button className='panel-button' onClick={()=>props.buyPlant('Bomb', 20)}>Buy Bomb $300</button>
           <button className='panel-button' onClick={()=>props.buyPlant('Laser', 20)}>Buy Laser $400</button>
           <button className='panel-button' onClick={()=>props.buyPlant('Missile', 10)}>Buy Missile $500</button>
           </div>

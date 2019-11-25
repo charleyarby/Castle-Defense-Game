@@ -11,6 +11,7 @@ var Rounds = [
      hardenedZombies:2,
      badassZombies:0,
      superbadassZombies:0
+
   },{
      round:3,
      regularZombies:15,
@@ -29,7 +30,43 @@ var Rounds = [
      hardenedZombies:10,
      badassZombies:0,
      superbadassZombies:0
-    },
+    },{
+      round:6,
+      regularZombies:60,
+      hardenedZombies:30,
+      badassZombies:0,
+      superbadassZombies:0
+     },{
+      round:7,
+      regularZombies:80,
+      hardenedZombies:40,
+      badassZombies:0,
+      superbadassZombies:0
+     },{
+      round:8,
+      regularZombies:100,
+      hardenedZombies:50,
+      badassZombies:0,
+      superbadassZombies:0
+     },{
+      round:9,
+      regularZombies:100,
+      hardenedZombies:50,
+      badassZombies:0,
+      superbadassZombies:0
+     },{
+      round:10,
+      regularZombies:140,
+      hardenedZombies:60,
+      badassZombies:0,
+      superbadassZombies:0
+     },{
+      round:11,
+      regularZombies:200,
+      hardenedZombies:100,
+      badassZombies:0,
+      superbadassZombies:0
+     },
 
 ]
 

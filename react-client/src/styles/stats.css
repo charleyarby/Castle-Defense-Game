@@ -1,0 +1,10 @@
+.stats-container {
+  display:flex;
+  justify-content: space-between;
+  margin-right: 50%;
+
+}
+
+.stats {
+  font-size:30px;
+}

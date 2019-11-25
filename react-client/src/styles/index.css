@@ -1,20 +1,14 @@
-.stats-container {
-  display:flex;
-  justify-content: space-between;
-  margin-right: 50%;
 
-}
-
-.stats {
-  font-size:30px;
-}
 
 .menu-buttons {
   margin-left:40%;
   margin-top:3%;
+  border-radius: 10%;
 
 }
 .menu-button {
   font-size:30px;
-
+  margin-left:1%;
+  border-radius: 10%;
+  outline: none;
 }
