@@ -7,12 +7,15 @@ for(var i=0; i<5; i++) {
   var y=50;
 
   for(var j=0; j<4;j++) {
-    row.push([50+count*column, y+100*yCount, false, '', 0])
+    row.push([50+count*column, y+100*yCount, false, '', 0, 0])
     count++;
   }
   field.push(row)
   yCount++
 }
+//0                1           2             3         4        5
+//[x location, y location, exist or not, plant type, damage, rotation]
+
 
 // var plantsLocation=[
 //   [[30,50, false, '', 0], [90,50, false, '', 0], [150,50, false, '', 0]],

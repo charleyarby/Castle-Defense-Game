@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/bullet.css'
+import missile from '../pictures/missile.png'
 
 const Bullets = (props) => {
   //console.log(props.bulletLocations)
@@ -9,6 +10,10 @@ const Bullets = (props) => {
 
     <svg>
       {bullets.map((bullet) => {
+        var x = bullet[0]
+        var y =bullet[1]
+        var degree = bullet[4]
+        var rotation = `rotate(${degree},${x},${y})`
         if (bullet[3] === 'Pea-Shooter') {
           return (
             <circle className='bullets' cx={Number(bullet[0])} cy={Number(bullet[1])} r="10" />
@@ -25,7 +30,7 @@ const Bullets = (props) => {
           )
         } else if (bullet[3] === 'Missile') {
           return (
-            <circle className='missile' cx={Number(bullet[0])} cy={Number(bullet[1])} r="20" />
+            <image href={missile} className='missile' x={Number(bullet[0])-45} y={Number(bullet[1])-40} r="20" transform={rotation} width='70px' height='70px'/>
           )
         }
       })}

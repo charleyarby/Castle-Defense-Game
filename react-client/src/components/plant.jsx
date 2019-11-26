@@ -4,7 +4,7 @@ import bombTower from '../pictures/bombTower.png'
 import bombTowerSelected from '../pictures/bombTowerSelected.png'
 import peaShooter from '../pictures/peaShooter.gif'
 import peaShooterSelected from '../pictures/peaShooterSelected.gif'
-import missileTower from '../pictures/missile.png'
+import missileTower from '../pictures/missileTower.png'
 import missileTowerSelected from '../pictures/missileSelected.png'
 import laserTower from '../pictures/laserTower.png'
 import laserTowerSelected from '../pictures/laserTowerSelected.png'
@@ -43,8 +43,12 @@ const Plant = (props) => {
                     <image href={laserTowerSelected} onClick={() => props.showPanel(column)} className='select Laser' x={column[0] - 45} y={column[1] - 40} width="90" height='90'/>
                   )
                 } else if (props.currentPlantSelected[3] === 'Missile') {
+                  var x = column[0]
+                  var y =column[1]
+                  var degree = column[5]
+                  var rotation = `rotate(${degree},${x},${y})`
                   return (
-                    <image href={missileTowerSelected} onClick={() => props.showPanel(column)} className='select Missile'  x={column[0] - 45} y={column[1] - 40}/>
+                    <image href={missileTowerSelected} onClick={() => props.showPanel(column)} className='select Missile'  x={column[0] - 45} y={column[1] - 40} transform={rotation}/>
                   )
                 } else if (props.currentPlantSelected[3] === '') {
                   return (
@@ -70,8 +74,12 @@ const Plant = (props) => {
                   <image href={laserTower} onClick={() => props.showPanel(column)} className='select Laser' x={column[0] - 45} y={column[1] - 40} width="90" height='90' />
                 )
               } else if (column[2] === true && column[3] === 'Missile') {
+                var x = column[0]
+                var y =column[1]
+                var degree = column[5]
+                var rotation = `rotate(${degree},${x},${y})`
                 return (
-                  <image href={missileTower} onClick={() => props.showPanel(column)} className='select Missile' x={column[0] - 45} y={column[1] - 40} />
+                  <image href={missileTower} onClick={() => props.showPanel(column)} className='select Missile' x={column[0] - 45} y={column[1] - 40} transform={rotation}/>
                 )
               }
 
