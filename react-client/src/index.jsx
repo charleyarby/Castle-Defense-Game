@@ -184,26 +184,35 @@ class App extends React.Component {
     var currentPlot = this.state.currentPlantSelected
     var currentPlant = this.state.currentPlantSelected
     var currentMoney = this.state.money
-
+    var frame = this.state.frame
     currentPlant[3] = plants;
     currentPlant[4] = damage
+
     var cost = 0
 
     if (plants === 'Pea-Shooter') {
       //  console.log('buy peashooter')
       cost = 200
+      currentPlant[7] = frame%50
+      currentPlant[8] = 50
     }
     if (plants === 'Bomb') {
       //console.log('buy Bomb')
       cost = 300
+      currentPlant[7] = frame%50
+      currentPlant[8] = 80
     }
     if (plants === 'Laser') {
       //console.log('buy Bomb')
       cost = 400
+      currentPlant[7] = frame%100
+      currentPlant[8] = 100
     }
     if (plants === 'Missile') {
       //console.log('buy Bomb')
       cost = 500
+      currentPlant[7] = frame%20
+      currentPlant[8] = 20
     }
 
 
@@ -399,7 +408,11 @@ class App extends React.Component {
           var xDiff = closestZombie[0] - allBullet[i][0]
           var yDiff = closestZombie[1] - allBullet[i][1]
           var rotate = Math.atan(yDiff / xDiff) * 57.2958
+          if(xDiff>40) {
           allBullet[i][4] = rotate
+          } else {
+            allBullet[i][4] = 0
+          }
         } else {
           allBullet[i][4] = 0
         }
@@ -444,25 +457,26 @@ class App extends React.Component {
         var exist = allPlants[j][i][2]
         var type = allPlants[j][i][3]
         var damage = allPlants[j][i][4]
+        var firerate = allPlants[j][i][8]
         //console.log(type)
         if (exist === true && zombieInLane[j] === true) {
 
-          if (type == 'Pea-Shooter' && frame % 20 === 0) {
+          if (type == 'Pea-Shooter' && frame % firerate === allPlants[j][i][7]) {
             newBullet.push([allPlants[j][i][0] + 50, allPlants[j][i][1], damage, type])
           }
-          if (type == 'Bomb' && frame % 100 === 0) {
+          if (type == 'Bomb' && frame % firerate === allPlants[j][i][7]) {
             newBullet.push([allPlants[j][i][0] + 50, allPlants[j][i][1], damage, type])
           }
-          if (type == 'Laser' && frame % 100 === 0) {
+          if (type == 'Laser' && frame % firerate === allPlants[j][i][7]) {
             newBullet.push([allPlants[j][i][0] + 50, allPlants[j][i][1], damage, type])
             laserSFX.play();
           }
-          if (type == 'Missile' && frame % 20 === 0) {
+          if (type == 'Missile' && frame % firerate === allPlants[j][i][7]) {
             // console.log('new missile')
             newBullet.push([allPlants[j][i][0] + 50, allPlants[j][i][1], damage, type, 0])
           }
         } else if (exist === true && this.state.zombieLocations.length !== 0) {
-          if (type == 'Missile' && frame % 20 === 0) {
+          if (type == 'Missile' && frame % firerate === allPlants[j][i][7]) {
             //console.log('new missile')
             newBullet.push([allPlants[j][i][0] + 50, allPlants[j][i][1], damage, type, 0])
           }

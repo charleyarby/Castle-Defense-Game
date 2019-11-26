@@ -52,14 +52,14 @@ const Plant = (props) => {
                   )
                 } else if (props.currentPlantSelected[3] === '') {
                   return (
-                    <circle onClick={() => props.showPanel(column)} className='selected ' cx={column[0]} cy={column[1]} r="20" />
+                    <circle onClick={() => props.showPanel(column)} className='selected ' cx={column[0]} cy={column[1]} r="50" />
                   )
                 }
               }
               else if (column[2] === false) {
                 // console.log('should have blank', column)
                 return (
-                  <circle onClick={() => props.showPanel(column)} className='select noplant ' cx={column[0]} cy={column[1]} r="20" />
+                  <circle onClick={() => props.showPanel(column)} className='select noplant ' cx={column[0]} cy={column[1]} r="50" />
                 )
               } else if (column[2] === true && column[3] === 'Pea-Shooter') {
                 return (

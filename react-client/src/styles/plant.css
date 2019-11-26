@@ -5,17 +5,17 @@
 
 .select:hover {
   stroke: #090;
-  fill:yellowgreen;
+  fill:rgba(218, 140, 38, 0.2);
 }
 
 .selected{
   stroke: rgb(30, 255, 0);
-  fill:rgb(241, 58, 34, 0.2);
+  fill:rgb(241, 58, 34, 0.1);
 }
 .noplant {
 
   stroke: rgb(30, 255, 0);
-  fill:rgba(131, 238, 82, 0.377);
+  fill:rgba(131, 238, 82, 0.1);
 }
 
 

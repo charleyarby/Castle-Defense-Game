@@ -1,6 +1,8 @@
 import React from 'react';
 import '../styles/bullet.css'
 import missile from '../pictures/missile.png'
+import bomb from '../pictures/bomb.png'
+import peas from '../pictures/peas.png'
 
 const Bullets = (props) => {
   //console.log(props.bulletLocations)
@@ -16,11 +18,11 @@ const Bullets = (props) => {
         var rotation = `rotate(${degree},${x},${y})`
         if (bullet[3] === 'Pea-Shooter') {
           return (
-            <circle className='bullets' cx={Number(bullet[0])} cy={Number(bullet[1])} r="10" />
+            <image href={peas} className='bullets' x={Number(bullet[0])} y={Number(bullet[1])-15} width='30' height='30' />
           )
         } else if (bullet[3] === 'Bomb') {
           return (
-            <circle className='bomb' cx={Number(bullet[0])} cy={Number(bullet[1])} r="20" />
+            <image href={bomb}  className='bomb' x={Number(bullet[0])} y={Number(bullet[1])-23} width='40' height='40' />
           )
         } else if (bullet[3] === 'Laser') {
           return (
